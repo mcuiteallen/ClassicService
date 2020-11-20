@@ -20,7 +20,7 @@ const upload = multer({
 
 module.exports = class mainten {
     uploadImg(req, res) {
-        upload(req, res, (err) => {
+        upload(req, res, async (err) => {
             if (err) console.log(err);
             else {
                 // Create folder path
@@ -47,12 +47,15 @@ module.exports = class mainten {
                     if (err) console.log('ERROR+ err');
                 });
                 if(body.lastData == 'true'){
-                    let pictureNameList = body.pictureNameList.split(',')
-                    lineNotifyModel.pushMessage(body.message);
-                    for(let i = 0 ; i < pictureNameList.length ; i++){
-                        lineNotifyModel.pushImage(body.session, '--------------', pictureNameList[i]);
+                    let pictureNameList = body.pictureNameList.split(',');
+                    let tokenList = ["MU06ZIvk3EGvQNwEzAsghq2HowdqJKwMmyc5DtRtm9z", "lDZXcJ2QsJ9puNnpuVzKRIMe22cJMXfy6EMKtDs7ecr"];
+                    for(let i = 0 ; i < tokenList.length ; i++){
+                        let result = await lineNotifyModel.pushMessage(body.message, tokenList[i]);
+                        console.log(result);
+                        for(let j = 0 ; j < pictureNameList.length ; j++){
+                            lineNotifyModel.pushImage(body.session, '圖片', pictureNameList[j], tokenList[i]);
+                        }
                     }
-                    
                 }
                 res.json({result: true});
             }
