@@ -48,7 +48,7 @@ module.exports = class mainten {
                 });
                 if(body.lastData == 'true'){
                     let pictureNameList = body.pictureNameList.split(',');
-                    let tokenList = ["MU06ZIvk3EGvQNwEzAsghq2HowdqJKwMmyc5DtRtm9z", "lDZXcJ2QsJ9puNnpuVzKRIMe22cJMXfy6EMKtDs7ecr"];
+                    let tokenList = ["hEZp6yO8dZaCCxePglCgDfwTGCGEFLteGJvlMswkVcB", "91pHC1GWJRxh6UMjJgs5SCwAoQda6vAP1trBHHezoki"];
                     for(let i = 0 ; i < tokenList.length ; i++){
                         let result = await lineNotifyModel.pushMessage(body.message, tokenList[i]);
                         console.log(result);

@@ -31,13 +31,13 @@ module.exports = class purchasing {
             '\n---訂購項目--- '+ '\n' +
             itemDetail + '\n' +
             '---總金額--- '+ '\n' +
-            '商品總金額 ' + body.price + '元 運費 ' + body.shipping  + '元 = ' + body.allPay + '元\n\n' +
+            '商品總金額 ' + body.price + '元 + 運費 ' + body.shipping  + '元 = ' + body.allPay + '元\n\n' +
             '---寄送方式--- '+ '\n' +
             '超商 : ' + body.market.type.name + '\n' +
             '門市名稱 : ' + body.market.name + '\n'  +
             '門市編號 : ' + body.market.id + '\n'  + 
             '門市地址 : ' + body.market.address + '\n'
-            let tokenList = ["MU06ZIvk3EGvQNwEzAsghq2HowdqJKwMmyc5DtRtm9z"];
+            let tokenList = ["f807ECm04kGPMMkfBqLtmON5bg0q0vmSwzhcRuoiat5"];
             for(let i = 0 ; i < tokenList.length ; i++){
                 let result = await lineNotifyModel.pushMessage(message, tokenList[i]);
                 if(result == 'send completed!'){
