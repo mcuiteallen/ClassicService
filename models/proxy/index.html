@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>很棒的住宅</title><meta name="referrer" content="never">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit"/>
+        <meta name="keywords" content="VR全景合成，全景合成，全景在线合成，全景制作软件，很棒的住宅全景效果图，很棒全景效果图，住宅全景效果图，很棒装修全景效果图，住宅装修全景效果图，建E全景"/>
+        <meta name="description" content="很棒的住宅 建E全景是一款免费的VR全景在线制作软件，3分钟快速合成，10秒一键分享，让你签单快人一步，是300万设计师都在用的在线签单工具。"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <script type="text/javascript" src="https://res1.justeasy.cn/min/b=js&f=jquery.min.js,jquery.qrcode.min.js,touch.min.js,3.0/page/vr/cat.touchjs.js,art-template-web.js,clipboard.min.js,swiper4.0.5.min.js,flexible.js,iscroll2.js,navbarscroll.js?v=2023071803"></script>
+        <style>
+            .cur {
+                cursor: pointer;
+                -webkit-tap-highlight-color: rgba(255,255,255,0);
+                -webkit-user-select: none;
+                -moz-user-focus: none;
+                -moz-user-select: none;
+            }
+        </style>
+        <script>
+            function getQueryStringByName(name) {
+                var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)","i"));
+                if (result == null || result.length < 1) {
+                    return "";
+                }
+                return result[1];
+            }
+            function G(name) {
+                return getQueryStringByName(name);
+            }
+            $.ajax({
+                url: "https://vr.justeasy.cn/v/ct",
+                type: 'get',
+                dataType: 'jsonp',
+                timeout: 1000,
+                data: {
+                    id: '16bj9z0799e276m6',
+                    lastupdate: '1690801249',
+                    act: 'preview',
+                    host: 'vr.justeasy.cn',
+                    timestamp: '1690801298',
+                    authid: '0',
+                    noncestr: '',
+                    signature: '',
+                    _get: window.location.search
+                },
+                success: function(res) {
+                    if (res.status == -201) {
+                        location.href = res.url;
+                    }
+                }
+            });
+            var weixin = 0;
+            var _userAgent = navigator.userAgent;
+            if (_userAgent.indexOf('MicroMessenger') > -1 && _userAgent.indexOf('wxwork') > -1) {
+                weixin = 1;
+            } else if (_userAgent.indexOf('MicroMessenger') > -1) {
+                weixin = 2;
+            }
+            var wx_share_appId = 'wx2ed7c1e3c0abd05b';
+            if (weixin == 1) {
+                wx_share_appId = 'ww219d1e0efe7d0cd7';
+            }
+            var vr_isWxAndroid = 0;
+            if (weixin > 0 && _userAgent.indexOf('Android') > -1) {
+                vr_isWxAndroid = 1;
+            }
+            function setCookie(name, value, Days) {
+                var exp = new Date();
+                exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+                document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+            }
+            function getCookie(name) {
+                var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+                if (arr = document.cookie.match(reg))
+                    return unescape(arr[2]);
+                else
+                    return null;
+            }
+            function settime() {
+                if (countdown == 0) {
+                    $("#timesss").html(countdown + "s");
+                    $("#timesss").html("关闭").css({
+                        color: "#fff"
+                    })
+                    $(".vr-close222").addClass("vr-close-btn");
+                    $(".vr-gg-box").hide();
+                    clearInterval(downClearTime);
+                } else {
+                    countdown--;
+                    $("#timesss").html(countdown + "s");
+                }
+            }
+            function openAdvertlink(url) {
+                if (app == "android") {
+                    android.goMicro('0', ' ', url);
+                } else if (app == "ios") {
+                    window.webkit.messageHandlers.goMicro.postMessage({
+                        canShare: '0',
+                        title: ' ',
+                        url: url
+                    });
+                } else {
+                    if (is_mobile > 0) {
+                        location.href = url;
+                    } else {
+                        window.open(url);
+                    }
+                }
+            }
+            var liked = ''
+              , like_num = 0
+              , view_num = 0
+              , is_view = 0
+              , is_like = 0
+              , is_vip = 0;
+            var wx_share_timestamp = ''
+              , wx_share_nonceStr = ''
+              , wx_share_signature = '';
+            var pano_like = getCookie('pano_like');
+            var uv_code = getCookie('vr_vip_statis_uv');
+            var vr_view_num = 0;
+            var countdown = 5;
+            var downClearTime = null;
+            var _time = parseInt(3);
+            var countDownClearTime = null;
+            var vip_auth_micro = 0
+              , vip_auth_TopAdvert = 0
+              , vip_auth_watermark = 0
+              , vip_auth_logo = 0;
+            var vip_auth_watermark_origin = ''
+              , is_offline_pano = 0;
+            var open_advert_h5 = "";
+            $.ajax({
+                url: "https://vr.justeasy.cn/v/lv/27962155",
+                type: 'get',
+                dataType: 'jsonp',
+                data: {
+                    pano_like: pano_like,
+                    uv_code: uv_code,
+                    weixin: weixin,
+                    url: location.href
+                },
+                success: function(res) {
+                    if (res.status == 200) {
+                        is_vip = res.list.is_vip;
+                        liked = res.list.liked;
+                        like_num = res.list.like_num;
+                        view_num = res.list.view_num;
+                        is_view = res.list.is_view;
+                        is_like = res.list.is_like;
+                        wx_share_timestamp = res.list.timestamp;
+                        wx_share_nonceStr = res.list.nonceStr;
+                        wx_share_signature = res.list.signature;
+                        vr_view_num = res.list.view_num;
+                        vip_auth_micro = res.list.vip_auth_micro;
+                        vip_auth_TopAdvert = res.list.vip_auth_TopAdvert;
+                        vip_auth_watermark = res.list.vip_auth_watermark;
+                        vip_auth_watermark_origin = res.list.vip_auth_watermark_origin;
+                        is_offline_pano = res.list.is_offline;
+                        vip_auth_logo = res.list.vip_auth_logo;
+                        if (vip_auth_TopAdvert) {
+                            $('.top-advert').hide();
+                            $('.vip_urlname').hide();
+                            $('#bodyclass').hide();
+                        }
+                        if (!res.list.vip_auth_intment) {
+                            $('.mdesigner1').hide();
+                        }
+                        if (res.list.vip_auth_micro) {
+                            $('.p_class_micro_icon').hide();
+                        }
+                        if (!res.list.vip_auto_map) {
+                            $('.vip_map').hide();
+                        }
+                        $('#pano-wrapper .mobile').hide()
+                        if (res.list.vip_auto_mobile == 2) {
+                            $('#pano-wrapper .mobile').show()
+                        }
+                        if (res.list.vip_auto_mobile == 1) {
+                            $('.vip_mobile1').show()
+                        }
+                        if (res.list.shareurl) {
+                            $('#shareimg canvas').remove();
+                            $('#shareimg').qrcode({
+                                render: 'canvas',
+                                ecLevel: 'H',
+                                size: 180,
+                                radius: 0.5,
+                                width: 180,
+                                height: 180,
+                                background: '#ffffff',
+                                text: res.list.shareurl
+                            });
+                        }
+                        if (is_vip) {
+                            $('.canvasHary').hide();
+                        }
+                        if (res.list.uv_code != -1) {
+                            setCookie('vr_vip_statis_uv', res.list.uv_code, 1);
+                        }
+                        if (is_offline_pano == 1) {
+                            $('body').html('<div id="save_theft_tips" class="vr-del-showbox vr-save-theft-showbox none">\n' + '    <div class="d-text d-text2" style="padding-top: 80px;">\n' + '        <p style="font-size: 24px;">该作品涉嫌违规， 已强制停止访问。</p>\n' + '    </div>\n' + '    <div class="txt txt2" style="margin-top: 10px;text-align: center;">\n' + '        <p class="p1"><span>注：</span>建E全景为公共合成平台，请积极配合，营造良好的展示环境！</p>\n' + '    </div>\n' + '</div>');
+                            layer.open({
+                                type: 1,
+                                title: '下架提醒',
+                                content: $("#save_theft_tips"),
+                                area: ['560px', '300px'],
+                                closeBtn: false,
+                                shadeClose: false,
+                            });
+                            removepano("krpanoSWFObject");
+                            return false;
+                        }
+                        if (is_mobile > 0) {
+                            $('p#btn_like').attr('data-val', liked);
+                            $('p#btn_like .item-icon-like').attr('style', 'background-image: url("https://res1.justeasy.cn/images/vr-revision/zan' + liked + '-moblie.png");');
+                            $('p#btn_like .item-title').find('#like_num').html(like_num);
+                            if (res.list.advert_open == '1' && res.list.advert.pic2_url != '') {
+                                if (_time > 0 && open_advert_h5 != '') {
+                                    if (res.list.advert_type == '1') {
+                                        var _html = `<div class="cont"><div class="vr-close222" style="z-index: 2147483647;"><span class="timesss" id="timesss">5s</span></div><div class="cover-gg">广告</div><a href="javascript:openAdvertlink('` + res.list.advert.link + `');" style="cursor:pointer;"><img src="` + res.list.advert.pic2_url + `"></a></div>`;
+                                        $('#preview_advert').html(_html);
+                                        setTimeout(function() {
+                                            $('#preview_advert').show();
+                                            downClearTime = setInterval(settime, 1000);
+                                            $(document).on('click', '.vr-gg-box .vr-close-btn', function(e) {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                $(".vr-gg-box").hide();
+                                                clearInterval(downClearTime);
+                                            });
+                                        }, (_time * 1000) + 300);
+                                    } else {
+                                        $('#preview_advert').append(res.list.advert.pic2_url);
+                                        setTimeout(function() {
+                                            $('#preview_advert').show();
+                                        }, (_time * 1000) + 300);
+                                        setTimeout(function() {
+                                            $('#preview_advert').hide();
+                                        }, (_time * 1000) + 5000);
+                                    }
+                                } else {
+                                    if (res.list.advert_type == '1') {
+                                        var _html = `<div class="cont"><div class="vr-close222" style="z-index: 2147483647;"><span class="timesss" id="timesss">关闭</span></div><div class="cover-gg">广告</div><a href="javascript:openAdvertlink('` + res.list.advert.link + `');" style="cursor:pointer;"><img src="` + res.list.advert.pic2_url + `"></a></div>`;
+                                        downClearTime = setInterval(function() {
+                                            $('#preview_advert').html(_html);
+                                            $('#preview_advert').show();
+                                            $(document).on('click', '.vr-gg-box .vr-close222', function(e) {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                $(".vr-gg-box").hide();
+                                                clearInterval(downClearTime);
+                                            });
+                                        }, 1000);
+                                    } else {
+                                        $('#preview_advert').append(res.list.advert.pic2_url);
+                                        $('#preview_advert').show();
+                                        setTimeout(function() {
+                                            $('#preview_advert').hide();
+                                        }, 5000);
+                                    }
+                                }
+                            }
+                        } else {
+                            $('a#btn_like').attr('data-val', liked);
+                            $('a#btn_like .item-icon-like').attr('style', 'background-image: url("https://res1.justeasy.cn/images/vr-revision/zan' + liked + '.png");');
+                            $('a#btn_like').siblings('#like_num').html(like_num);
+                            if (res.list.advert_open == '1' && res.list.advert.pic1_url != '') {
+                                if (_time > 0 && open_advert_h5 != '') {
+                                    if (res.list.advert_type == '1') {
+                                        var _html = `<div class="cont"><div class="vr-close222" style="z-index: 2147483647;"><span class="timesss" id="timesss">5s</span></div><div class="cover-gg">广告</div><a href="javascript:openAdvertlink('` + res.list.advert.link + `');" style="cursor:pointer;"><img src="` + res.list.advert.pic1_url + `"></a></div>`;
+                                        setTimeout(function() {
+                                            $('#preview_advert').show();
+                                            downClearTime = setInterval(settime, 1000);
+                                            $(document).on('click', '.vr-gg-box .vr-close-btn', function(e) {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                $(".vr-gg-box").hide();
+                                                clearInterval(downClearTime);
+                                            });
+                                        }, (_time * 1000) + 300);
+                                    } else {
+                                        $('#preview_advert').append(res.list.advert.pic1_url);
+                                        setTimeout(function() {
+                                            $('#preview_advert').show();
+                                        }, (_time * 1000) + 300);
+                                        setTimeout(function() {
+                                            $('#preview_advert').hide();
+                                        }, (_time * 1000) + 5000);
+                                    }
+                                } else {
+                                    if (res.list.advert_type == '1') {
+                                        var _html = `<div class="cont"><div class="vr-close222" style="z-index: 2147483647;"><span class="timesss" id="timesss">关闭</span></div><div class="cover-gg">广告</div><a href="javascript:openAdvertlink('` + res.list.advert.link + `');" style="cursor:pointer;"><img src="` + res.list.advert.pic1_url + `"></a></div>`;
+                                        downClearTime = setInterval(function() {
+                                            $('#preview_advert').html(_html);
+                                            $('#preview_advert').show();
+                                            $(document).on('click', '.vr-gg-box .vr-close222', function(e) {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                $(".vr-gg-box").hide();
+                                                clearInterval(downClearTime);
+                                            });
+                                        }, 1000);
+                                    } else {
+                                        $('#preview_advert').append(res.list.advert.pic1_url);
+                                        $('#preview_advert').show();
+                                        setTimeout(function() {
+                                            $('#preview_advert').hide();
+                                        }, 5000);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            function IsMobile() {
+                var userAgentInfo = navigator.userAgent.toLowerCase();
+                var Agents = ['nokia', 'sony', 'ericsson', 'mot', 'samsung', 'htc', 'sgh', 'lg', 'sharp', 'sie-', 'philips', 'panasonic', 'alcatel', 'lenovo', 'iphone', 'iPhone', 'ipod', 'blackberry', 'meizu', 'android', 'netfront', 'symbian', 'ucweb', 'windowsce', 'palm', 'operamini', 'operamobi', 'openwave', 'nexusone', 'cldc', 'midp', 'wap', 'mobile', 'ipad', 'webview', 'Mobile', 'Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'];
+                var flag = false;
+                for (var v = 0; v < Agents.length; v++) {
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                        flag = true;
+                        break;
+                    }
+                }
+                return flag;
+            }
+            var app = G('referer');
+            var isbigscreen = G('isBigScreen');
+            var _fromapp = G('_fromapp');
+            var app_referer = 0;
+            var is_mobile;
+            if (IsMobile()) {
+                is_mobile = 200;
+                if ($.inArray(app, ['ios', 'android']) != -1) {
+                    app_referer = 1;
+                }
+                if (_fromapp == 'sjtt') {
+                    app_referer = 2;
+                }
+            } else {
+                is_mobile = -200;
+                isbigscreen = 2;
+            }
+        </script>
+        <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+        <script type="text/javascript" src="https://res1.justeasy.cn/vr16/tour.js"></script>
+        <script type="text/javascript" src="https://res1.justeasy.cn/js/layer/layer-v3.1.1/layer.js?v=2023071803"></script>
+        <link rel="stylesheet" href="https://res1.justeasy.cn/css/vip_vr.css?v=2023071803">
+        <link rel="stylesheet" href="https://res1.justeasy.cn/css/quanjing/vrSynthesis.css?v=2023071803">
+        <link rel="stylesheet" type="text/css" href="https://res1.justeasy.cn/min/b=css&f=swiper.min.css,vr-preview.css,vr-preview-son.css,vr-edit.css,quanjing/vrEdit.css?v=20230718032">
+    </head>
+    <body>
+        <div id="bodyclass" style="width: 100%;height: 100%;z-index: 1900;position: absolute;display: none;">
+            <div id="passWordWarp"></div>
+            <div id="loading">
+                <div id="loadingImg" style="width:100%;height: 100%;display: flex;justify-content: center;align-items: center;">
+                    <img src="">
+                </div>
+            </div>
+            <div class="time-start" style="cursor:pointer;" onclick="clearTimeout(timeClock);startPano();">
+                <span class="time" id="time">3</span>
+                s自动进入全景或点击直接进入
+
+            </div>
+        </div>
+        <audio id="mp3" src="https://vrmusic.justeasy.cn/uploads/music/202204/20220402155229_624800bd2279d.mp3" loop="loop" style="display: none;"></audio>
+        <div id="pano" style="width:100%;height:100%;">
+            <noscript>
+                <table style="width:100%;height:100%;">
+                    <tr style="vertical-align:middle;">
+                        <td>
+                            <div style="text-align:center;">
+                                ERROR:<br/>
+                                <br/>
+                                Javascript not activated<br/>
+                                <br/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </noscript>
+        </div>
+        <script>
+            var PANOID = "27962155";
+            var uid = parseInt("3054982");
+            var has_expired = parseInt("0");
+            var versions = "0";
+            var music = parseInt("1");
+            var xml = "https://vrxml.justeasy.cn/27962155_1690801249.xml";
+            var krpano;
+            var bodyclass = "";
+            var sendboxopen = "";
+            var lat = "39.916527";
+            var lng = "116.397128";
+            var shareUrl = "https://vr.justeasy.cn/view/16bj9z0799e276m6-1690801249.html";
+            var bodyBackgroundColor = "";
+            var advertStatus = parseInt("0");
+            var vr_model_group = parseInt("2");
+            var galleryThumbs, galleryTop, tag_index = 0, json_List;
+            var pano_setting_showthumbs = "false";
+            var wx_share_desc = '很棒的住宅\r\n很棒的住宅';
+            var wx_share_imgUrl = 'https://vrimg.justeasy.cn/pano/20230731/42-182756_64c78cac1db60.tiles/thumb.jpg';
+            var wx_share_title = '很棒的住宅';
+            var vr_site_vrimg = "https://vrimg.justeasy.cn/";
+            var vr_site_url = "https://vr.justeasy.cn/";
+            var vr_adv_url = "";
+            var vr_site_res1_url = "https://res1.justeasy.cn/";
+            var vr_water_origin = "";
+            var vr_is_vip = "1";
+            var _SessionStoragejson;
+            var _sandBoxisLanguage = 1;
+            var _sandTargetToSandid = [];
+            var _sandTargetToSandList = [];
+            var _sandTargetToSandInfoList = [];
+            var audioHotSpotActiveId = 0;
+            var intro = "设计说明";
+            var last_update_time = "1690801249";
+            var is_encrypt = parseInt("0");
+            var open_advert_pc = "";
+            var open_advert_h5 = "";
+        </script>
+        <div class="pano-revision-moblie none-revision" id="panoMoblie" style="display: none;">
+            <div class="fixed-design" onclick="getintro();">
+                <i style="width: 25px;height: 25px;"></i>
+            </div>
+            <div class="left-moblie"></div>
+            <div class="right-moblie">
+                <p class="item icon-revision" id="btn_like">
+                    <i class="item-icon item-icon-like"></i>
+                    <span class="item-title">
+                        <i id="like_num">0</i>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="canvasPop none" id="canvasPop">
+            <div class="canvas_box">
+                <canvas id="myCanvas" width="760" height="920" style="width: 380px;height: 460px"></canvas>
+                <div class="canvasHary" style="top: 328px;position: absolute;width: 87px;height: 87px;left: 268px;background: url('https://res1.justeasy.cn/images/quanjing/qrbackground.png');cursor: pointer;"></div>
+            </div>
+            <ul class="clearfix" id="canavas_operate">
+                <li class="item20227 fl copyLink" data-clipboard-text="https://vr.justeasy.cn/view/16bj9z0799e276m6-1690801249.html" id="canvas_copy" style="margin-right: 45px;margin-left: 55px">
+                    <i class="icon icon-link" style="width: 100%;"></i>
+                    <p>复制链接分享</p>
+                </li>
+                <li class="item20227 fl" onclick="shareC()" style="margin-right: 45px;margin-left: 55px">
+                    <i class="icon icon-sm"></i>
+                    <p>扫码分享</p>
+                    <em></em>
+                </li>
+            </ul>
+        </div>
+        <div class="canvas_img none" id="canvas_img"></div>
+        <div class="canvas_empty none">
+            <canvas width="83" height="83" id="canvasWhite"></canvas>
+        </div>
+        <ul class="pano-wrapper pano-revision" id='pano-wrapper' style="display:none;">
+            <li style="width: 1px;height: 50px;"></li>
+            <div class="ewm none" style="padding: 10px; width:180px;height:180px;background: #fff">
+                <div id="shareimg"></div>
+            </div>
+            <li class="share">
+                <div style="padding: 10px; width:180px;height:180px;background: #fff;display: none;">
+                    <div></div>
+                </div>
+                <p class="icon-revision-warp">
+                    <span class="icon-revision">
+                        <i style="background-image: url('https://res1.justeasy.cn/images/vr-revision/share.png');referrerPolicy: 'no-referrer'" ></i>
+                    </span>
+                </p>
+                <div class="iconname">分享</div>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="getintro();">
+                    <p class="icon-revision-warp">
+                        <span class="icon-revision">
+                            <i style="background-image: url('https://res1.justeasy.cn/images/vr-revision/design.png');"></i>
+                        </span>
+                    </p>
+                </a>
+                <div class="iconname iconname-scroll">
+                    <i class="item-scroll-common" style="padding: 0;">设计说明</i>
+                </div>
+            </li>
+            <li>
+                <a href="javascript:;" id="btn_like">
+                    <p class="icon-revision-warp">
+                        <span class="icon-revision">
+                            <i class="item-icon-like"></i>
+                        </span>
+                    </p>
+                </a>
+                <div class="iconname" id="like_num"></div>
+            </li>
+            <li class="vr-preview-icon-right"></li>
+        </ul>
+        <div id="des_intro" style="display:none">
+            <div class="intro" style="padding:20px;">很棒的住宅 </div>
+        </div>
+        <script type="text/html" id="material-view">
+            
+        <div class="material-view">
+            <button class="m-back" onclick="joinscene('{{id}}')">返回主场景</button>
+            <div class="cont clearfix">
+                {{each list value}}
+                <div class="item fl" style="cursor:pointer;" onclick="joinscene('{{value.id}}')">
+                    <div class="pic">
+                        <img src="https://vrimg.justeasy.cn/{{value.pic}}">
+                    </div>
+                    <p class="txt ellipsis">{{value.name}}</p>
+                    <i class="icon icon-now-material {{value.active}}"></i>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    
+        </script>
+        <script type="text/javascript" src="https://res1.justeasy.cn/js/3.0/page/vr/previewnew.min.js?v=20230718039"></script>
+        <script>
+            function startPano() {
+                if (is_offline_pano == 1) {
+                    return false;
+                }
+                embedpano({
+                    swf: "https://res1.justeasy.cn/vr16/tour.swf?v=16",
+                    xml: xml,
+                    target: "pano",
+                    html5: "prefer",
+                    mobilescale: 1.0,
+                    passQueryParameters: true,
+                    wmode: "opaque"
+                });
+                krpano = document.getElementById("krpanoSWFObject");
+            }
+            var timeClock;
+            if (bodyclass == 'body-class') {
+                $('#loading').show();
+                if (bodyBackgroundColor) {
+                    $("body").css('background-color', bodyBackgroundColor);
+                }
+                timeClock = setTimeout('startPano()', 3000);
+            } else {
+                startPano();
+            }
+        </script>
+        <script type="text/javascript" src="https://res1.justeasy.cn/min/b=js&f=art-template-web.js,swiper4.0.5.min.js,flexible.js,iscroll2.js,navbarscroll.js?v=2023071803"></script>
+        <div class="tab-shuffling visibility no-show" id="tab-shuffling"></div>
+        <script type='text/html' id="template_lb">
+            
+            <div class="lb" id="lb">
+                {{each jsonList val i }}
+                <div class="cont {{if i!=0 }}none{{/if}} vr-lb-groupid-{{val.id}} ">
+                    <div class="swiper-container gallery-top gallery-top_{{val.id}}">
+                        <div class="swiper-wrapper" style="display: none;">
+                            {{each val.son val2 i}}
+                            <div class="swiper-slide">{{val2.name}}</div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <div class="swiper-container gallery-thumbs gallery-thumbs_{{val.id}}">
+                        <div class="swiper-wrapper">
+                            {{each val.son val2 k}}
+                            <div class="swiper-slide vr-slide vr-pano2sceneid-{{val2.pano2sceneid}} {{if k==0 }} vr-groupid-{{val2.groupid}} {{/if}} {{if val2.hide==1}}none{{/if}}" data-index="{{k}}" data-pano2sceneid="{{val2.pano2sceneid}}" data-groupid="{{val2.groupid}}" title="{{val2.name}}">
+                                <div class="pic"><img id="pic-img-{{val.val2}}" src="https://vrimg.justeasy.cn/{{val2.preview}}"></div>
+                                <div class="name2">
+                                    <div id="container_small_tip{{val2.pano2sceneid}}" class="container_small_tip">
+                                        <div id="content_small_tip{{val2.pano2sceneid}}" class="content_small_tip">{{val2.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+
+            <div class="wrapper02 nav-tab none" id="nav-tab">
+                <div class="scroller">
+                    <ul class="clearfix">
+                        {{each jsonName val i}}
+                        {{if i == 0}}
+                        <li class="item  nav-tab-groupid-{{val.id}}" data-id="{{val.id}}" data-index="{{i}}"><a href="javascript:void(0)">{{val.name}}</a></li>
+                        {{else/}}
+                        <li class="item  nav-tab-groupid-{{val.id}}" data-id="{{val.id}}" data-index="{{i}}"><a href="javascript:void(0)">{{val.name}}</a></li>
+                        {{/if}}
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        
+        </script>
+        <script type="text/javascript" src="https://res1.justeasy.cn/min/b=js&f=3.0/page/vr/roll.js?v=2023071803"></script>
+        <script>
+            json_List = {
+                jsonName: [{
+                    "name": "\u9ed8\u8ba4",
+                    "id": 0
+                }],
+                jsonList: [{
+                    "id": 0,
+                    "name": "\u9ed8\u8ba4",
+                    "son": [{
+                        "name": "\u5168\u666f\u5716_20230727_2023-07-31-18-26-13",
+                        "groupid": 0,
+                        "sceneid": "89292138",
+                        "pano2sceneid": "77442443",
+                        "preview": "pano\/20230731\/42-182756_64c78cac1db60.tiles\/thumb.jpg",
+                        "hide": 0
+                    }]
+                }]
+            };
+            function lbFun1(el, num, OffsetAfter) {
+                galleryThumbs = new Swiper('.gallery-thumbs_' + el,{
+                    spaceBetween: 10,
+                    slidesPerView: num,
+                    freeMode: true,
+                    watchSlidesVisibility: true,
+                    watchSlidesProgress: true,
+                    slidesOffsetAfter: OffsetAfter,
+                    centerInsufficientSlides: true,
+                    on: {
+                        init: function() {
+                            if (el > 0) {
+                                $(".swiper-slide").removeClass('swiper-slide-active swiper-slide-thumb-active').children();
+                            }
+                        },
+                    },
+                });
+                galleryTop = new Swiper('.gallery-top_' + el,{
+                    spaceBetween: 10,
+                    slidesOffsetAfter: 30,
+                    centerInsufficientSlides: true,
+                    thumbs: {
+                        swiper: galleryThumbs
+                    }
+                });
+            }
+            $(document).ready(function() {
+                if (is_offline_pano == 1) {
+                    return false;
+                }
+                $(window).resize(function(event) {
+                    reloadnum();
+                });
+                $(window).bind('orientationchange', function(e) {
+                    $("#tab-shuffling").addClass('phone');
+                    $(".phone .swiper-slide").css({
+                        "width": "65px !important",
+                        "height": "65px !important"
+                    });
+                    reloadnum();
+                });
+                var _w, _num;
+                if (vr_model_group != 0) {
+                    $('#show_scenes').show();
+                    $(document).on('click', '.swiper-container .vr-slide', function() {
+                        let _SCENEID = $(this).attr('data-pano2sceneid');
+                        krpano.call("loadscene(scene_" + _SCENEID + ",null,MERGE,BLEND(0.8));");
+                        if (vip_auth_TopAdvert > 0) {
+                            for (var i in krpano.get("hotspot").getArray()) {
+                                if (krpano.get("hotspot").getArray()[i].name.indexOf('nadirlogo') >= 0) {
+                                    krpano.call("delhotspot(" + krpano.get("hotspot").getArray()[i].name + ")");
+                                }
+                            }
+                        }
+                        $(".swiper-slide").removeClass('swiper-slide-active swiper-slide-thumb-active');
+                        $('.vr-pano2sceneid-' + _SCENEID).addClass('swiper-slide-active swiper-slide-thumb-active');
+                        handerWordRoll(_SCENEID);
+                    });
+                    let html = template("template_lb", json_List);
+                    let is_pic_true = IsPC();
+                    function IsPC() {
+                        var userAgentInfo = navigator.userAgent;
+                        var Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+                        var flag = true;
+                        for (var v = 0; v < Agents.length; v++) {
+                            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                        return flag;
+                    }
+                    $("#tab-shuffling").append(html);
+                    handerWordRoll(json_List.jsonList[0].son[0].pano2sceneid)
+                    function reloadnum() {
+                        if (is_pic_true) {
+                            $("#tab-shuffling").removeClass('phone');
+                            _w = $('body,html').width() - 140;
+                            _num = Math.ceil(_w / 110);
+                        } else {
+                            $("#tab-shuffling").addClass('phone');
+                            _w = $('body,html').width();
+                            _num = Math.ceil(_w / 75);
+                        }
+                        lbFun1(json_List.jsonList[0].id, _num, (json_List.jsonList[0].son.length * 15));
+                    }
+                    reloadnum();
+                    $('#nav-tab').navbarscroll({
+                        defaultSelect: tag_index,
+                        scrollerWidth: 6,
+                        fingerClick: 1,
+                        endClickScroll: function(obj) {}
+                    });
+                    $("#nav-tab .item").click(function() {
+                        let _index = $(this).index();
+                        $("#lb .cont").eq(_index).show().siblings().hide();
+                        lbFun1(json_List.jsonList[_index].id, _num, (json_List.jsonList[_index].son.length * 15));
+                        $(".swiper-slide").removeClass('swiper-slide-thumb-active swiper-slide-active');
+                        $(".vr-pano2sceneid-" + krpano.get("scene[get(xml.scene)].id")).addClass('swiper-slide-thumb-active swiper-slide-active');
+                    });
+                    $(document).on('click', '#show_scenes', function() {
+                        if ($('#tab-shuffling').hasClass('visibility')) {
+                            $('#tab-shuffling').removeClass('visibility');
+                            $(".tab-shuffling").css({
+                                transform: 'translateY(0px)'
+                            });
+                            $(".tab-shuffling").addClass('no-show');
+                        } else {
+                            let isTure = $("#tab-shuffling").hasClass('no-show');
+                            if (isTure) {
+                                $(".tab-shuffling").css({
+                                    transform: 'translateY(300px)'
+                                });
+                                $(".tab-shuffling").removeClass('no-show');
+                            } else {
+                                $(".tab-shuffling").css({
+                                    transform: 'translateY(0px)'
+                                });
+                                $(".tab-shuffling").addClass('no-show');
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+        <script>
+            if (is_offline_pano == 0) {
+                $(function() {
+                    if (app_referer == 2) {
+                        if (is_mobile > 0) {
+                            $('#btn_like').remove();
+                        } else {
+                            $('#btn_like').parent().remove();
+                        }
+                    }
+                    if (is_mobile > 0) {
+                        if (open_advert_h5 != '') {
+                            var _style = 'max-width:100%;height: 100%';
+                            if (is_encrypt == 1) {
+                                $('#loadingImg').hide();
+                            }
+                            $('#loadingImg img').attr('src', open_advert_h5).attr('style', _style);
+                            $('#bodyclass').show();
+                        }
+                    } else {
+                        if (open_advert_pc != '') {
+                            var _style = 'width:100%;max-height: 100%';
+                            if (is_encrypt == 1) {
+                                $('#loadingImg').hide();
+                            }
+                            $('#loadingImg img').attr('src', open_advert_pc).attr('style', _style);
+                            $('#bodyclass').show();
+                        }
+                    }
+                });
+            }
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?d354a40e1143f3574bc86106fd51eddb";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            }
+            )();
+        </script>
+        <script type="text/javascript">
+            function countDownFn() {
+                if (countDownClearTime) {
+                    return false;
+                }
+                countDownClearTime = setInterval(()=>{
+                    if (_time == 0) {
+                        clearInterval(countDownClearTime);
+                        _time = 0
+                    } else {
+                        _time--;
+                    }
+                    $("#time").text(_time);
+                }
+                , 1000)
+            }
+            if (_time > 0 && is_offline_pano == 0) {
+                countDownFn();
+            }
+            function goTel(mobile) {
+                if (app == "ios") {
+                    window.webkit.messageHandlers.goTel.postMessage({
+                        num: mobile
+                    });
+                } else {
+                    android.goTel(mobile);
+                }
+            }
+            function getCanvasInfoData() {
+                var code = $("#shareimg").find("canvas")[0];
+                var codeImg = code.toDataURL('image/png');
+                getCanvasWhite();
+                var data = {
+                    canvas: {
+                        casePicUrl: "https://vrimg.justeasy.cn/pano/20230731/42-182756_64c78cac1db60.tiles/thumb.jpg",
+                        codeWhiteUrl: whiteUrl,
+                        codeUrl: codeImg,
+                        logoUrl: "https://res1.justeasy.cn/images/vr/vr20227/logo2.png",
+                        uerUrl: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAZABkAAD/7AARRHVja3kAAQAEAAAAZAAA/+EDcmh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8APD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOjNlNmJmN2ExLTQwNWYtYzI0ZS05ZDk5LTgzMWI0ZWY2ODgwOCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGRjk5MUU5ODk4QUExMUU5QTUyNjk4ODM1QUEyMzVBNCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGRjk5MUU5Nzk4QUExMUU5QTUyNjk4ODM1QUEyMzVBNCIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OEZFQTU5MzU5MzA2MTFFOThGMENERTAwOUFFN0NBM0UiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OEZFQTU5MzY5MzA2MTFFOThGMENERTAwOUFFN0NBM0UiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1l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",
+                        title: "很棒的住宅",
+                        userName: "建E网48175607"
+                    },
+                    operate: {
+                        linkUrl: ""
+                    }
+                }
+                var _html = `<img src="${data.canvas.casePicUrl}" crossOrigin="anonymous" id="canvas_case_pic" ><img src="${data.canvas.codeWhiteUrl}" crossOrigin="anonymous" id="canvas_code_white" ><img src="${data.canvas.codeUrl}" crossOrigin="anonymous" id="canvas_code"><img src="${data.canvas.logoUrl}" crossOrigin="anonymous" id="canvas_logo" ><img src="${data.canvas.uerUrl}" crossOrigin="anonymous" id="canvas_user"/>`
+                $("#canvas_img").append(_html);
+                if (data.canvas.title.length > 10) {
+                    data.canvas.title = data.canvas.title.substring(0, 10) + "...";
+                }
+                if (data.canvas.userName.length > 6) {
+                    data.canvas.userName = data.canvas.userName.substring(0, 6) + "...";
+                }
+                setTimeout(function() {
+                    canvasPop(data.canvas.title, data.canvas.userName);
+                }, 300);
+            }
+        </script>
+        <div class="vr-gg-box none" id="preview_advert"></div>
+    </body>
+</html>
